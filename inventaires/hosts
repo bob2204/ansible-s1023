@@ -10,3 +10,6 @@ centos
 
 [srv:vars]
 ansible_port=22
+
+[www]
+debiancli
