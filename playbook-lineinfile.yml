@@ -9,9 +9,20 @@
       lineinfile:
         dest: /etc/apache2/ports.conf
         regex: ^Listen
-        line: Listen 81
+        line: Listen 83
+      notify:
+        - restart_apache
 
+    - name: Affichage
+      debug:
+        msg: Coucou
+
+  handlers:
     - name: Redémarrage d'Apache
       systemd:
         name: apache2
         state: restarted
+      listen:
+        - restart_apache
+
+
