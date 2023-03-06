@@ -1,0 +1,2 @@
+debiancli ansible_host=192.168.56.200
+centoscli ansible_host=192.168.56.210
