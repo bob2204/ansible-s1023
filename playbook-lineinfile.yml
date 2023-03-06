@@ -17,6 +17,14 @@
       debug:
         msg: Coucou
 
+    - name: Remodification du port d'écoute
+      lineinfile:
+        dest: /etc/apache2/ports.conf
+        regex: ^Listen
+        line: Listen 84
+      notify:
+        - restart_apache
+
   handlers:
     - name: Redémarrage d'Apache
       systemd:
