@@ -1,0 +1,17 @@
+---
+- name: Installation/configuration du service apache2
+  hosts: www
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Installation du paquet apache2
+      ansible.builtin.package:
+        name: apache2
+        state: present
+
+    - name: Démarrage et activation du service apache2
+      ansible.builtin.systemd:
+        name: apache2
+        state: started
+        enabled: true
