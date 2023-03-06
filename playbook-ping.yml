@@ -1,6 +1,7 @@
 ---
 - name: Utilisation du module ping
   hosts: srv
+  gather_facts: false
   tasks:
     - name: Ping vers les cibles
       ping:
