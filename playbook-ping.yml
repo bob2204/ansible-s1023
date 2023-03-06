@@ -1,0 +1,7 @@
+---
+- name: Utilisation du module ping
+  hosts: srv
+  tasks:
+    - name: Ping vers les cibles
+      ping:
+        data: OK
