@@ -1,0 +1,14 @@
+---
+- name: Copie du fichier index.html sur les serveurs www
+  hosts: www
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Copie
+      copy:
+        src: index.html
+        dest: /var/www/html
+        owner: www-data
+        group: www-data
+        mode: "0600"
