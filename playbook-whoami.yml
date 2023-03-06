@@ -1,0 +1,15 @@
+---
+- name: Acte sans become
+  hosts: debiancli
+
+  tasks:
+    - name: Affichage
+      shell: whoami
+
+- name: Acte avec become
+  hosts: debiancli
+  become: true
+
+  tasks:
+    - name: Affichage
+      shell: whoami
