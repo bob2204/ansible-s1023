@@ -13,6 +13,8 @@
       notify:
         - restart_apache
 
+    - meta: flush_handlers
+
     - name: Affichage
       debug:
         msg: Coucou
