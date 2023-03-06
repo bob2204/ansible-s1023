@@ -1,0 +1,14 @@
+---
+- name: Acte I
+  hosts: debian
+  tasks:
+    - name: Affichage
+      debug:
+        msg: Tâche I acte I
+
+- name: Acte II
+  hosts: centos
+  tasks:
+    - name: Affichage
+      debug:
+        msg: Tâche I acte II
