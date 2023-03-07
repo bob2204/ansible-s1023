@@ -1,0 +1,15 @@
+---
+- name: Gestion des statuts de tâches
+  hosts: debiancli
+
+  tasks:
+    - name: Recherche de root dans /etc/passwd
+      shell: grep bidule /etc/passwd
+      changed_when: false
+      failed_when: result.rc > 1
+      register: result
+
+    - name: Affichage de la variable result
+      debug:
+        msg: "La variable result donne: {{ result }}"
+        verbosity: 2
