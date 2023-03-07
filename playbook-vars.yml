@@ -1,23 +1,13 @@
 ---
-- name: Variables de playbook
+- name: Inclusion de variables
   hosts: debiancli
   gather_facts: false
 
-  vars:
-    stage: ansible
-    stagiaires:
-      - Annick
-      - Christel
-      - Fabien
-      - Jordane
-      - Mario
-      - Patrick_D
-      - Patrick_H
-      - Stéphane
-      - Tristan
-      - Yannick
-
   tasks:
+    - name: Inclusion du fichier de variables stage.yml
+      include_vars:
+        file: stage.yml
+
     - name: Affichage de la variable stage
       debug:
         msg: "La variable stage vaut: {{ stage }}"
