@@ -1,0 +1,40 @@
+---
+- name: Illustrations des boucles loop
+  hosts: debiancli
+
+  vars_files:
+    - vars/stage.yml
+
+  tasks:
+    - name: Exemple simplissime
+      debug:
+        msg: "Valeur n° {{ idx+1 }}: {{ chose }}"
+      loop:
+        - violet
+        - marguerite
+        - ananas
+        - motocyclette
+      loop_control:
+        loop_var: chose
+        index_var: idx
+
+    - name: Exemple à partir d'une variable liste
+      debug:
+        msg: "{{ stagiaire }} {{ idx+1 }}"
+      loop: "{{ stagiaires }}"
+      loop_control:
+        loop_var: stagiaire
+        index_var: idx
+
+    - name: Boucles imbriquées
+      debug:
+        msg: "{{ item.0.login }} {{ item.1 }}"
+      loop: "{{ logins|subelements('groups') }}"
+
+    - name: Produit cartésien stagiaires x groupes
+      debug:
+        msg: "{{ item.0 }} {{ item.1 }}"
+      loop: "{{ stagiaires | product(groupes) }}"
+      when:
+        - item.0 != 'Annick'
+        - item.1 != 'infos'
