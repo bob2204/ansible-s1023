@@ -1,0 +1,23 @@
+---
+- name: Variables de playbook
+  hosts: debiancli
+  gather_facts: false
+
+  vars:
+    stage: ansible
+    stagiaires:
+      - Annick
+      - Christel
+      - Fabien
+      - Jordane
+      - Mario
+      - Patrick_D
+      - Patrick_H
+      - Stéphane
+      - Tristan
+      - Yannick
+
+  tasks:
+    - name: Affichage de la variable stage
+      debug:
+        msg: "La variable stage vaut: {{ stage }}"
