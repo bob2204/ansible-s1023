@@ -1,0 +1,13 @@
+---
+- name: Illustration du module group_by
+  hosts: all,!w7
+
+  tasks:
+    - name: Création de groupe du nom de chaque distribution
+      group_by:
+        key: "{{ ansible_distribution }}"
+
+    - name: Vérification si la cible fait bien partie du groupe Debian
+      debug:
+        msg: "{{ inventory_hostname }}"
+      when: inventory_hostname in groups.Debian
