@@ -1,0 +1,21 @@
+---
+- name: Création de variable/fait
+  hosts: www
+
+  tasks:
+    - name: Création de la variable form
+      set_fact:
+        form: "ansible+{{ ansible_distribution }}"
+        cacheable: true
+
+    - name: Affichage
+      debug:
+        msg: "Formation: {{ form }}"
+
+- name: Accès à la variable form
+  hosts: debiancli
+
+  tasks:
+    - name: Affichage
+      debug:
+        msg: "Formation: {{ form }}"

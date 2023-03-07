@@ -1,0 +1,8 @@
+---
+- name: Accès à la variable form
+  hosts: www
+
+  tasks:
+    - name: Affichage
+      debug:
+        msg: "Formation: {{ form }}"

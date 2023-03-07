@@ -1,0 +1,8 @@
+---
+- name: Utilisation des facts
+  hosts: www
+
+  tasks:
+    - name: Distribution
+      debug:
+        msg: "{{ inventory_hostname }}: {{ ansible_distribution }}-{{ ansible_distribution_major_version }}"
