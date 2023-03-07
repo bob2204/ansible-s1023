@@ -1,0 +1,9 @@
+---
+- name: Les extra variables
+  hosts: debiancli
+  gather_facts: false
+
+  tasks:
+    - name: Affichage de la variable formation
+      debug:
+        msg: "Formation en cours: {{ formation }}"
