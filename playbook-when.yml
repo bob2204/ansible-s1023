@@ -1,0 +1,35 @@
+---
+- name: Structure when
+  hosts: www
+
+  tasks:
+    - name: Affichage
+      debug:
+        msg: "{{ inventory_hostname }} ({{ ansible_distribution }})"
+      when: ansible_distribution|lower == 'debian'
+
+    - name: Affichage si Debian et version > 10
+      debug:
+        msg: "{{ inventory_hostname }} ({{ ansible_distribution }})"
+      when:
+        - ansible_distribution|lower == 'debian'
+        - ansible_distribution_major_version > '10'
+
+    - name: Affichage si Debian ou version > 10
+      debug:
+        msg: "{{ inventory_hostname }} ({{ ansible_distribution }} {{ ansible_distribution_major_version }})"
+      when:
+        - ansible_distribution|lower == 'debian'
+          or
+          ansible_distribution_major_version|int > 11
+        - ansible_system|lower in ('linux','unix')
+
+    - block:
+      - name: Affichage 1
+        debug:
+          msg: Affichage 1
+
+      - name: Affichage 2
+        debug:
+          msg: Affichage 2
+      when: ansible_system|lower == 'linux'
