@@ -6,4 +6,4 @@
   tasks:
     - name: Affichage de la variable formation
       debug:
-        msg: "Formation en cours: {{ formation }}"
+        msg: "Formation en cours: {{ formation|default('Non définie') }}"
