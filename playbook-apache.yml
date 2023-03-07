@@ -1,17 +1,51 @@
 ---
-- name: Installation/configuration du service apache2
+- name: Installation/configuration d'un service apache
   hosts: www
   gather_facts: false
   become: true
 
   tasks:
-    - name: Installation du paquet apache2
+    - name: Installation du paquet
       ansible.builtin.package:
-        name: apache2
+        name: "{{ apache_package_name }}"
         state: present
 
-    - name: Démarrage et activation du service apache2
+    - name: Démarrage et activation du service
       ansible.builtin.systemd:
-        name: apache2
+        name: "{{ apache_service_name }}"
         state: started
         enabled: true
+
+    - name: Modification du port d'écoute
+      lineinfile:
+        dest: "{{ apache_port_filename }}"
+        regex: ^Listen
+        line: "Listen {{ apache_port }}"
+      notify: restart_apache
+
+    - name: Copie du fichier index.html
+      copy:
+        src: index.html
+        dest: "{{ document_root }}"
+        owner: "{{ apache_user }}"
+        group: "{{ apache_group }}"
+        mode: "0600"
+
+  handlers:
+    - name: Redémarrage apache
+      systemd:
+        name: "{{ apache_service_name }}"
+        state: restarted
+      listen: restart_apache
+
+- name: Désactivation du firewall sur CentOS
+  hosts: centoscli
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Désactivation du firewall
+      systemd:
+        name: firewalld
+        state: stopped
+        enabled: false

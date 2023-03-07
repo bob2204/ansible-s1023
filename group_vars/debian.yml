@@ -1,0 +1,6 @@
+---
+apache_package_name: apache2
+apache_service_name: apache2
+apache_port_filename: /etc/apache2/ports.conf
+apache_user: www-data
+apache_group: www-data
