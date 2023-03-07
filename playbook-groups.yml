@@ -1,0 +1,13 @@
+---
+- name: Illustration de la variable groups
+  hosts: all,!w7
+
+  tasks:
+    - name: Affichage de la variable groups
+      debug:
+        var: groups
+
+    - name: Affichage inventory_hostname si la cible est dans le groupe debian
+      debug:
+        msg: "{{ inventory_hostname }} est bien dans le groupe debian"
+      when: inventory_hostname in groups.debian
