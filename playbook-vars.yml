@@ -1,13 +1,12 @@
 ---
-- name: Inclusion de variables
+- name: Inclusion de variables (alternative avec vars_files)
   hosts: debiancli
   gather_facts: false
 
-  tasks:
-    - name: Inclusion du fichier de variables stage.yml
-      include_vars:
-        file: stage.yml
+  vars_files:
+    - vars/stage.yml
 
+  tasks:
     - name: Affichage de la variable stage
       debug:
         msg: "La variable stage vaut: {{ stage }}"
