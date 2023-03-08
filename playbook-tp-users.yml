@@ -1,0 +1,34 @@
+---
+- name: TP sur les logins
+  hosts: srv
+  become: true
+
+  tasks:
+    - name: Inclusion du fichier logins.yml
+      include_vars:
+        file: logins.yml
+
+    - name: Affichage de la variable logins
+      debug:
+        var: logins
+      tags: never
+
+    - name: Affichage des groupes
+      debug:
+        var: item.1
+      loop: "{{ logins|subelements('groups') }}"
+      tags: never
+
+    - name: Création des groupes
+      group:
+        name: "{{ item.1 }}"
+      loop: "{{ logins|subelements('groups') }}"
+
+    - name: Création des logins
+      user:
+        name: "{{ item.login }}"
+        shell: "{{ item.shell }}"
+        password: "{{ item.password | password_hash('sha512','azertyuiop') }}"
+        append: true
+        groups: "{{ item.groups }}"
+      loop: "{{ logins }}"
