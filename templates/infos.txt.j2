@@ -1,0 +1,11 @@
+{# Découverte de la syntaxe Jinja2 #}
+Cible: {{ inventory_hostname }}
+Distribution: {{ ansible_distribution }}
+Version: {{ ansible_distribution_major_version }}
+{% if ansible_distribution_minor_version is defined %}
+Release: {{ ansible_distribution_minor_version }}
+{% endif %}
+IPv4:
+{% for addr in ansible_all_ipv4_addresses %}
+ - {{ addr }}
+{% endfor %}

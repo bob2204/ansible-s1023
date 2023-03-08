@@ -1,0 +1,8 @@
+---
+- name: Lookup template de vérification
+  hosts: www
+
+  tasks:
+    - name: Lookup template
+      debug:
+        msg: "{{ lookup('template','templates/infos.txt.j2').split('\n') }}"
