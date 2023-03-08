@@ -1,0 +1,20 @@
+---
+- name: Afficher le nom des cibles et l'IP en 192.168...
+  hosts: srv
+
+  tasks:
+    - name: Récupération et affichage
+      debug:
+        msg: "{{ item }} {{ inventory_hostname }}"
+      loop: "{{ ansible_all_ipv4_addresses }}"
+      when: item|regex_search('^192.168') == '192.168'
+      tags: never
+
+    - name: Récupération et stockage dans /tmp/hosts.txt
+      lineinfile:
+        line: "{{ item }} {{ inventory_hostname }}"
+        dest: /tmp/hosts.txt
+        create: true
+      loop: "{{ ansible_all_ipv4_addresses }}"
+      when: item|regex_search('^192.168') == '192.168'
+      delegate_to: localhost
