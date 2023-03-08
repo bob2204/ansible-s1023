@@ -4,3 +4,5 @@ apache_service_name: httpd
 apache_port_filename: /etc/httpd/conf/httpd.conf
 apache_user: apache
 apache_group: apache
+php_fpm_package_name: php-fpm
+php_fpm_service_name: php-fpm

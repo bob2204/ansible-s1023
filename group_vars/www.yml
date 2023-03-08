@@ -1,3 +1,4 @@
 ---
 document_root: /var/www/html
-apache_port: 8080
+apache_port: 80
+php_srv: 192.168.56.210

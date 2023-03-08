@@ -10,4 +10,9 @@ centos
 
 [www]
 debiancli
+
+[php]
 centoscli
+
+[win]
+w7

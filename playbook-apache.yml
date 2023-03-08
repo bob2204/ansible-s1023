@@ -1,7 +1,6 @@
 ---
 - name: Installation/configuration d'un service apache
   hosts: www
-  gather_facts: false
   become: true
 
   tasks:
@@ -23,13 +22,30 @@
         line: "Listen {{ apache_port }}"
       notify: restart_apache
 
-    - name: Copie du fichier index.html
+    - name: Copie du répertoire web
       copy:
-        src: index.html
+        src: web/
         dest: "{{ document_root }}"
         owner: "{{ apache_user }}"
         group: "{{ apache_group }}"
         mode: "0600"
+
+    - name: Template de connexion au service php-fpm
+      template:
+        src: 000-default.conf.j2
+        dest: /etc/apache2/sites-available/000-default.conf
+        backup: true
+      notify: restart_apache
+
+    - name: Activation des modules proxy et proxy_fcgi
+      apache2_module:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - proxy
+        - proxy_fcgi
+      when: ansible_distribution|lower in ('debian','ubuntu')
+      notify: restart_apache
 
   handlers:
     - name: Redémarrage apache
@@ -39,8 +55,7 @@
       listen: restart_apache
 
 - name: Désactivation du firewall sur CentOS
-  hosts: centoscli
-  gather_facts: false
+  hosts: php
   become: true
 
   tasks:
@@ -49,3 +64,48 @@
         name: firewalld
         state: stopped
         enabled: false
+      when: ansible_distribution|lower in ('centos','redhat','fedora')
+
+    - name: Installation PHP-FPM
+      package:
+        name: "{{ php_fpm_package_name }}"
+        state: present
+
+    - name: Configuration du service
+      systemd:
+        name: "{{ php_fpm_service_name }}"
+        state: started
+        enabled: true
+
+    - name: Directive listen
+      lineinfile:
+        dest: /etc/php-fpm.d/www.conf
+        regex: ^listen *=
+        line: listen = 9000
+        backup: true
+      notify: restart_php_fpm
+
+    - name: Directive listen_allowed_clients
+      lineinfile:
+        dest: /etc/php-fpm.d/www.conf
+        state: present
+        backrefs: true
+        regex: ^(listen.allowed_client.*)$
+        line: ;\1 
+        backup: true
+      notify: restart_php_fpm
+
+    - name: Copie du répertoire web
+      copy:
+        src: web/
+        dest: "{{ document_root }}"
+        owner: "{{ apache_user }}"
+        group: "{{ apache_group }}"
+        mode: "0600"
+
+  handlers:
+    - name: Redémarrage du service php-fpm
+      systemd:
+        name: "{{ php_fpm_service_name }}"
+        state: restarted
+      listen: restart_php_fpm
