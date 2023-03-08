@@ -1,0 +1,47 @@
+---
+- name: Illustration de certains lookups
+  hosts: localhost
+
+  vars:
+    stage_toulouse: Ansible
+    stage_bordeaux: Grafana
+
+  tasks:
+    - name: Lookup dig -> Requête DNS (pip install dnspython)
+      debug:
+        msg: "kernel.org: {{ lookup('dig','kernel.org') }}"
+      tags: never
+
+    - name: Lookup env -> Accès à une variable d'environnement
+      debug:
+        msg: "HOME: {{ lookup('env','HOME') }}"
+      tags: never
+
+    - name: Lookup file -> Accès à un fichier texte (fichier en local sur le pilote)
+      debug:
+        msg: "vars/stage: {{ lookup('file','vars/stage.yml').split('\n')[1] }}"
+      tags: never
+
+    - name: Lookup url -> Accès à une URL
+      debug:
+        msg: "{{ lookup('url','http://192.168.56.200:8080/index.html', wantlist=True) }}"
+      tags: never
+
+    - name: Boucle sur les deux variables
+      debug:
+        msg: "stage à {{ item }}: {{ lookup('vars','stage_'+item) }}"
+      loop:
+        - toulouse
+        - bordeaux
+      tags: never
+
+    # Spécial Christel
+
+    - name: set_fact et nommage dynamique
+      set_fact:
+        "stage_{{ stage_toulouse }}": "Initiation"
+
+    - name: Lecture
+      debug:
+        msg: "{{ stage_Ansible }}"
+      
