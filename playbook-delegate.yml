@@ -18,3 +18,11 @@
       loop: "{{ ansible_all_ipv4_addresses }}"
       when: item|regex_search('^192.168') == '192.168'
       delegate_to: localhost
+
+    - name: Concaténation avec le fichier /etc/hosts de chaque cible
+      lineinfile:
+        dest: /etc/hosts
+        line: "{{ item }}"
+      loop: "{{ lookup('file','/tmp/hosts.txt').split('\n') }}"
+      when: item|regex_search(inventory_hostname) != inventory_hostname
+      become: true
