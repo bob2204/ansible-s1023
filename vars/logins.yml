@@ -1,0 +1,13 @@
+logins:
+  - login: bob
+    groups:
+      - admin
+      - infos
+      - sig
+    shell: /bin/bash
+  - login: curt
+    groups:
+      - sig
+      - devops
+      - astro
+    shell: /bin/bash

@@ -4,6 +4,7 @@
 
   vars_files:
     - vars/stage.yml
+    - vars/logins.yml
 
   tasks:
     - name: Exemple simplissime
