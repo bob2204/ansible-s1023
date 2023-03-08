@@ -5,9 +5,11 @@ logins:
       - infos
       - sig
     shell: /bin/bash
+    password: azerty
   - login: curt
     groups:
       - sig
       - devops
       - astro
     shell: /bin/bash
+    password: qwerty
