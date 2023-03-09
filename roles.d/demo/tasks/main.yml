@@ -1,8 +1,22 @@
 ---
 # tasks file for roles.d/demo
 
-- name: Tâche I du rôle demo
-  debug:
-    msg: "Tâche n°1 du rôle demo (info: {{ info }})"
-  changed_when: true
-  notify: handler_demo
+- name: Inclusion de tâches
+  include_tasks:
+    file: task_one.yml
+  when: option|d(1) == 1
+
+- name: Inclusion de tâches
+  include_tasks:
+    file: task_two.yml
+  when: option|d(1) == 2
+
+- name: Inclusion de tâches
+  import_tasks:
+    file: task_one.yml
+  tags: t1
+
+- name: Inclusion de tâches
+  include_tasks:
+    file: task_two.yml
+  tags: t2

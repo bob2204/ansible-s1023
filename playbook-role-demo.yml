@@ -5,3 +5,4 @@
   roles:
     - role: demo
       info: Valeur perso
+      option: 2
