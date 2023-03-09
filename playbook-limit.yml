@@ -1,0 +1,16 @@
+---
+- name: Limit
+  hosts: all
+  gather_facts: false
+  ignore_errors: true
+  ignore_unreachable: true
+
+  tasks:
+    - name: Copy
+      copy:
+        src: data.txt
+        dest: /tmp
+
+    - name: Affichage
+      debug:
+        var: inventory_hostname
