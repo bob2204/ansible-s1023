@@ -2,6 +2,7 @@
 - name: TP sur les logins
   hosts: srv
   become: true
+  no_log: true
 
   tasks:
     - name: Inclusion du fichier logins.yml
@@ -32,3 +33,4 @@
         append: true
         groups: "{{ item.groups }}"
       loop: "{{ logins }}"
+      no_log: false
