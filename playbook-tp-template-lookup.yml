@@ -1,0 +1,14 @@
+---
+- name: TP sur les templates et lookups
+  hosts: srv
+
+  tasks:
+    - name: Affichage du template
+      debug:
+        msg: "{{ lookup('template','templates/info-tp.txt.j2').split('\n') }}"
+        verbosity: 1
+
+    - name: transfert du template
+      template:
+        src: info-tp.txt.j2
+        dest: /tmp/info-tp.txt

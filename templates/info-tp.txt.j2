@@ -1,0 +1,5 @@
+Cible: {{ inventory_hostname }}
+Archi: {{ ansible_architecture }}
+{% for iface in ansible_interfaces|sort %}
+{{ iface }}: {{ lookup('vars','ansible_'+iface).ipv4.address }}/{{ lookup('vars','ansible_'+iface).ipv4.prefix }}
+{% endfor %}
