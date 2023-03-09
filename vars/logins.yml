@@ -5,11 +5,11 @@ logins:
       - infos
       - sig
     shell: /bin/bash
-    password: "{{ lookup('hashi_vault','secret=logins/data/bob token=s.7NoS1dUGIr8jTW7M7gPxAovS url=http://192.168.56.1:8200').password }}"
+    password: "{{ lookup('hashi_vault','secret=logins/data/bob token='+token+' url=http://192.168.56.1:8200').password }}"
   - login: curt
     groups:
       - sig
       - devops
       - astro
     shell: /bin/bash
-    password: "{{ lookup('hashi_vault','secret=logins/data/curt token=s.7NoS1dUGIr8jTW7M7gPxAovS url=http://192.168.56.1:8200').password }}"
+    password: "{{ lookup('hashi_vault','secret=logins/data/curt token='+token+' url=http://192.168.56.1:8200').password }}"

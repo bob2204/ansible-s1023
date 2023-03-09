@@ -4,6 +4,9 @@
   become: true
   no_log: true
 
+  vars_files:
+    - .env.yml
+
   tasks:
     - name: Inclusion du fichier logins.yml
       include_vars:
