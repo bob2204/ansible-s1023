@@ -1,0 +1,36 @@
+---
+- name: Acte I
+  hosts: debian
+  tags: acte1
+
+  tasks:
+    - name: Affichage
+      debug:
+        msg: Tâche I acte I
+      tags:
+        - t1a1
+        - autretag
+
+    - name: Affichage
+      debug:
+        msg: Tâche II acte I
+      tags: always
+
+    - name: Affichage
+      debug:
+        msg: Tâche III acte I
+
+- name: Acte II
+  hosts: centos
+  tags: acte2
+
+  tasks:
+    - name: Affichage
+      debug:
+        msg: Tâche I acte II
+      tags: t1a2
+
+    - name: Affichage
+      debug:
+        msg: Tâche II acte I
+      tags: never
