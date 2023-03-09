@@ -1,0 +1,6 @@
+---
+# defaults file for rolevar
+
+##
+# Port Apache
+apache_port: 80

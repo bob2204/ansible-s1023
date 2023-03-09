@@ -1,0 +1,49 @@
+---
+# Tâches pour le rôle php-fpm
+#
+
+- name: Variables Debian
+  include_vars:
+    file: debian.yml
+  when: ansible_distribution == 'Debian'
+
+- name: Variables CentOS
+  include_vars:
+    file: centos.yml
+  when: ansible_distribution == 'CentOS'
+
+- name: Désactivation du firewall
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+  when: ansible_distribution|lower in ('centos','redhat','fedora')
+
+- name: Installation PHP-FPM
+  package:
+    name: "{{ php_fpm_package_name }}"
+    state: present
+
+- name: Configuration du service
+  systemd:
+    name: "{{ php_fpm_service_name }}"
+    state: started
+    enabled: true
+
+- name: Directive listen
+  lineinfile:
+    dest: /etc/php-fpm.d/www.conf
+    regex: ^listen *=
+    line: listen = 9000
+    backup: true
+  notify: restart_php_fpm
+
+- name: Directive listen_allowed_clients
+  lineinfile:
+    dest: /etc/php-fpm.d/www.conf
+    state: present
+    backrefs: true
+    regex: ^(listen.allowed_client.*)$
+    line: ;\1 
+    backup: true
+  notify: restart_php_fpm

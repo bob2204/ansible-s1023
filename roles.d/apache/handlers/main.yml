@@ -1,0 +1,8 @@
+---
+# Handlers pour le rôle apache
+
+- name: Redémarrage apache
+  systemd:
+    name: "{{ apache_service_name }}"
+    state: restarted
+  listen: restart_apache

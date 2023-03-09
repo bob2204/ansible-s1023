@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        #ProxyPassMatch "\.php$" "fcgi://{{ php_srv }}:9000/var/www/html" enablereuse=on
+
+        <FilesMatch \.php$>
+            SetHandler "proxy:fcgi://{{ php_srv }}:9000"
+        </FilesMatch>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>

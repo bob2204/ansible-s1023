@@ -1,0 +1,48 @@
+---
+# Tâches pour le rôle Apache
+#
+
+- name: Variables Debian
+  include_vars:
+    file: debian.yml
+  when: ansible_distribution == 'Debian'
+
+- name: Variables CentOS
+  include_vars:
+    file: centos.yml
+  when: ansible_distribution == 'CentOS'
+
+- name: Installation du paquet
+  ansible.builtin.package:
+    name: "{{ apache_package_name }}"
+    state: present
+
+- name: Démarrage et activation du service
+  ansible.builtin.systemd:
+    name: "{{ apache_service_name }}"
+    state: started
+    enabled: true
+
+- name: Modification du port d'écoute
+  lineinfile:
+    dest: "{{ apache_port_filename }}"
+    regex: ^Listen
+    line: "Listen {{ apache_port }}"
+  notify: restart_apache
+
+- name: Template de connexion au service php-fpm
+  template:
+    src: 000-default.conf.j2
+    dest: /etc/apache2/sites-available/000-default.conf
+    backup: true
+  notify: restart_apache
+
+- name: Activation des modules proxy et proxy_fcgi
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - proxy
+    - proxy_fcgi
+  when: ansible_distribution|lower in ('debian','ubuntu')
+  notify: restart_apache

@@ -1,0 +1,8 @@
+---
+# handlers file for php-fpm
+
+- name: Redémarrage du service php-fpm
+  systemd:
+    name: "{{ php_fpm_service_name }}"
+    state: restarted
+  listen: restart_php_fpm

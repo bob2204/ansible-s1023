@@ -1,0 +1,33 @@
+---
+- name: Installation/configuration d'un service apache
+  hosts: www
+  become: true
+
+  roles:
+    - role: apache
+
+  post_tasks:
+    - name: Copie du répertoire web
+      copy:
+        src: web/
+        dest: "{{ document_root }}"
+        owner: "{{ apache_user }}"
+        group: "{{ apache_group }}"
+        mode: "0600"
+
+- name: Installation/configuration d'un service php-fpm
+  hosts: php
+  become: true
+
+  roles:
+    - role: php-fpm
+
+  post_tasks:
+    - name: Copie du répertoire web
+      copy:
+        src: web/
+        dest: "{{ document_root }}"
+        owner: "{{ apache_user }}"
+        group: "{{ apache_group }}"
+        mode: "0600"
+
