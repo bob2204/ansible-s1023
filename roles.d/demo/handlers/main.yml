@@ -1,0 +1,7 @@
+---
+# handlers file for roles.d/demo
+
+- name: Handler du rôle demo
+  debug:
+    msg: "Handler OK !"
+  listen: handler_demo

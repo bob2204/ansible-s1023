@@ -1,0 +1,8 @@
+---
+# tasks file for roles.d/demo
+
+- name: Tâche I du rôle demo
+  debug:
+    msg: "Tâche n°1 du rôle demo"
+  changed_when: true
+  notify: handler_demo

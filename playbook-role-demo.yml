@@ -1,0 +1,6 @@
+---
+- name: Playbook de test du rôle demo
+  hosts: debiancli
+
+  roles:
+    - demo
