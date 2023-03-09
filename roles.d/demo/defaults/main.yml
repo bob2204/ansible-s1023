@@ -1,2 +1,7 @@
 ---
 # defaults file for roles.d/demo
+
+#
+## Variable info: blabla
+
+info: Rôle demo

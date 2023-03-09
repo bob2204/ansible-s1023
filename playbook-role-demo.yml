@@ -3,4 +3,5 @@
   hosts: debiancli
 
   roles:
-    - demo
+    - role: demo
+      info: Valeur perso

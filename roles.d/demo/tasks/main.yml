@@ -3,6 +3,6 @@
 
 - name: Tâche I du rôle demo
   debug:
-    msg: "Tâche n°1 du rôle demo"
+    msg: "Tâche n°1 du rôle demo (info: {{ info }})"
   changed_when: true
   notify: handler_demo
