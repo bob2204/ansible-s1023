@@ -1,0 +1,16 @@
+---
+- name: Acte I
+  hosts: srv
+  serial: [1,10,100%]
+  tasks:
+    - name: Tâche I acte I
+      debug:
+        msg: Tâche I acte I
+
+    - name: Tâche II acte I
+      debug:
+        msg: Tâche II acte I
+
+    - name: Tâche III acte I
+      debug:
+        msg: Tâche III acte I
