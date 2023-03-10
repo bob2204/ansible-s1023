@@ -1,0 +1,5 @@
+ansible_host: 192.168.31.119
+ansible_user: admin
+ansible_connection: ssh
+ansible_port: 22
+ansible_shell_type: powershell
