@@ -1,0 +1,8 @@
+---
+- name: Test lookup explode
+  hosts: localhost
+
+  tasks:
+    - name: Affichage
+      debug:
+        msg: "{{ lookup('explode','salut', wantlist=true) }}"

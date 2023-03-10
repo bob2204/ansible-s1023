@@ -1,0 +1,8 @@
+---
+- name: Filtre de test
+  hosts: localhost
+
+  tasks:
+    - name: Filttre de test
+      debug:
+        msg: "{{ 'Coucou'|filtre_test('bob') }}"
