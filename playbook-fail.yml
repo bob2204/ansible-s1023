@@ -1,0 +1,13 @@
+---
+- name: Module fail
+  hosts: srv
+
+  tasks:
+    - name: Stopper le playbook si une condition est vérifiée
+      fail:
+        msg: "Distribution non supportée"
+      when: ansible_distribution in ['Debian']
+
+    - name: Tâche suivante
+      debug:
+        msg: "On continue..."

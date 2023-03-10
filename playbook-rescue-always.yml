@@ -1,0 +1,18 @@
+---
+- name: block rescue always
+  hosts: localhost
+
+  tasks:
+  - block:
+    - name: tâche
+      debug:
+        msg: "Glop glop"
+      failed_when: true
+    rescue:
+    - name: au secours
+      debug:
+        msg: "Au secours"
+    always:
+    - name: Tâche permanente
+      debug:
+        msg: "Je suis toujours là"

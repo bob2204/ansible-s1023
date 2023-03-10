@@ -1,0 +1,16 @@
+---
+- name: Module assert
+  hosts: srv
+
+  tasks:
+    - name: Prérequis à vérifier
+      assert:
+        that:
+          - ansible_distribution in ['CentOS','RedHat']
+          - ansible_architecture == 'x86_64'
+        success_msg: Distribution supportée
+        fail_msg: Distribution non supportée
+
+    - name: Tâche suivante
+      debug:
+        msg: "On continue..."
