@@ -1,0 +1,12 @@
+mysql_root_password: secret
+mysql_databases:
+  - name: stage
+mysql_users:
+  - name: bob
+    host: localhost
+    password: azerty
+    priv: stage.*:ALL
+  - name: bob
+    host: 192.168.56.210
+    password: azerty
+    priv: stage.*:ALL

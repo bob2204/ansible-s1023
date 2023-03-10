@@ -15,4 +15,7 @@ debiancli
 centoscli
 
 [win]
-w7
+w10
+
+[db]
+debiancli

@@ -1,0 +1,35 @@
+---
+- name: Mise en œuvre d'un service MariaDB
+  hosts: db
+  become: true
+
+  roles:
+    - role: geerlingguy.mysql
+
+- name: Reconfiguration PHP et test
+  hosts: php,www
+  become: true
+  tags: php
+
+  tasks:
+    - name: Installation des paquets pour MariaDB
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php-pdo
+        - php-mysql
+      when: inventory_hostname in groups.php
+      notify: restart_php_fpm
+
+    - name: Copie
+      copy:
+        src: web/sql.php
+        dest: /var/www/html
+
+  handlers:
+    - name: Restart PHP-FPM
+      systemd:
+        name: php-fpm
+        state: restarted
+      listen: restart_php_fpm
